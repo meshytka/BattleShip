@@ -46,7 +46,7 @@ namespace Battleship
                     {
                         var newShip = GenerateShip(shipSize);
 
-                        if (!boardCheck.IsBadShip(ships, newShip))
+                        if (boardCheck.IsGoodShip(ships, newShip))
                         {
                             ships.Add(newShip);
                             sucseesGenerate = true;

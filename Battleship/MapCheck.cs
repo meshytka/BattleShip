@@ -16,6 +16,11 @@ namespace Battleship
         {
             List<Ship> ships = new List<Ship>();
 
+            if(!CheckMapSize(map))
+            {
+                return false;
+            }
+
             for (var i = 0; i < 10; i++)
             {
                 for (var j = 0; j < 10; j++)
@@ -29,7 +34,7 @@ namespace Battleship
 
                         var newShip = GetShipByFirstPoint(map, i, j);
 
-                        if (IsBadShip(ships, newShip))
+                        if (!IsGoodShip(ships, newShip))
                             return false;
 
                         ships.Add(newShip);
@@ -70,6 +75,16 @@ namespace Battleship
             return ships;
         }
 
+        private bool CheckMapSize(int[,] map)
+        {
+            if (map.Rank != 2 || map.Length != 100 || map.GetUpperBound(0) + 1 != 10)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         private bool IsAlreadyKnow(List<Ship> ships, int i, int j)
         {
             var point = (i, j);
@@ -79,7 +94,7 @@ namespace Battleship
             return false;
         }
 
-        private bool IsBadPoint(List<Ship> ships, (int, int) newPoint)
+        private bool IsGoodPoint(List<Ship> ships, (int, int) newPoint)
         {
             foreach (var ship in ships)
             {
@@ -91,12 +106,12 @@ namespace Battleship
                     if (newPoint.Item1 >= x - 1 && newPoint.Item1 <= x + 1)
                     {
                         if (newPoint.Item2 >= y - 1 && newPoint.Item2 <= y + 1)
-                            return true;
+                            return false;
                     }
                 }
             }
 
-            return false;
+            return true;
         }
 
         private Ship GetShipByFirstPoint(int[,] map, int x, int y)
@@ -114,7 +129,7 @@ namespace Battleship
                     g++;
                 }
             }
-            else if (x != 9 && (map[x + 1, y] == 1 || map[x, y + 1] == 2))
+            else if (x != 9 && (map[x + 1, y] == 1 || map[x + 1, y] == 2))
             {
                 int k = x;
 
@@ -132,7 +147,7 @@ namespace Battleship
             return ship;
         }
 
-        public bool IsBadShip(List<Ship> ships, Ship newShip)
+        public bool IsGoodShip(List<Ship> ships, Ship newShip)
         {
             var newShipSize = newShip.Points.Count();
 
@@ -140,14 +155,14 @@ namespace Battleship
 
             foreach (var point in newShip.Points)
             {
-                if (IsBadPoint(ships, point))
+                if (!IsGoodPoint(ships, point))
                     return false;
             }
 
-            if (newShipSize > 4 || newShipSize + countOfSameShips == 5)
-                return true;
+            if (newShipSize + countOfSameShips >= 5)
+                return false;
 
-            return false;
+            return true;
         }
     }
 }

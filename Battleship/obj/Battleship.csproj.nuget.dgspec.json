@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Visual Studio Projects\\Battleship\\Battleship\\Battleship.csproj": {}
+    "D:\\Visual Studio Projects\\battleship\\Battleship\\Battleship.csproj": {}
   },
   "projects": {
-    "D:\\Visual Studio Projects\\Battleship\\Battleship\\Battleship.csproj": {
+    "D:\\Visual Studio Projects\\battleship\\Battleship\\Battleship.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Visual Studio Projects\\Battleship\\Battleship\\Battleship.csproj",
+        "projectUniqueName": "D:\\Visual Studio Projects\\battleship\\Battleship\\Battleship.csproj",
         "projectName": "Battleship",
-        "projectPath": "D:\\Visual Studio Projects\\Battleship\\Battleship\\Battleship.csproj",
+        "projectPath": "D:\\Visual Studio Projects\\battleship\\Battleship\\Battleship.csproj",
         "packagesPath": "C:\\Users\\me_sh\\.nuget\\packages\\",
-        "outputPath": "D:\\Visual Studio Projects\\Battleship\\Battleship\\obj\\",
+        "outputPath": "D:\\Visual Studio Projects\\battleship\\Battleship\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\me_sh\\AppData\\Roaming\\NuGet\\NuGet.Config",

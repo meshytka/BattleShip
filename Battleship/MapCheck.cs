@@ -12,7 +12,7 @@ namespace Battleship
             return true;
         }
 
-        public bool CheckMap(int[,] board)
+        public bool CheckMap(int[,] map)
         {
             List<Ship> ships = new List<Ship>();
 
@@ -20,14 +20,14 @@ namespace Battleship
             {
                 for (var j = 0; j < 10; j++)
                 {
-                    var point = board[i, j];
+                    var point = map[i, j];
 
                     if (point == 1)
                     {
                         if (IsAlreadyKnow(ships, i, j))
                             continue;
 
-                        var newShip = GetShipByFirstPoint(board, i, j);
+                        var newShip = GetShipByFirstPoint(map, i, j);
 
                         if (IsBadShip(ships, newShip))
                             return false;
@@ -37,10 +37,15 @@ namespace Battleship
                 }
             }
 
+            if (ships.Count() != 10)
+            {
+                return false;
+            }
+
             return true;
         }
 
-        public List<Ship> GetAllShips(int[,] board)
+        public List<Ship> GetAllShips(int[,] map)
         {
             List<Ship> ships = new List<Ship>();
 
@@ -48,14 +53,14 @@ namespace Battleship
             {
                 for (var j = 0; j < 10; j++)
                 {
-                    var point = board[i, j];
+                    var point = map[i, j];
 
                     if (point == 1 || point == 2)
                     {
                         if (IsAlreadyKnow(ships, i, j))
                             continue;
 
-                        var newShip = GetShipByFirstPoint(board, i, j);
+                        var newShip = GetShipByFirstPoint(map, i, j);
 
                         ships.Add(newShip);
                     }
@@ -94,26 +99,26 @@ namespace Battleship
             return false;
         }
 
-        private Ship GetShipByFirstPoint(int[,] board, int x, int y)
+        private Ship GetShipByFirstPoint(int[,] map, int x, int y)
         {
             Ship ship = new Ship();
             ship.Points = new List<(int, int)>();
 
-            if (y != 10 && (board[x, y + 1] == 1 || board[x, y + 1] == 2))
+            if (y != 9 && (map[x, y + 1] == 1 || map[x, y + 1] == 2))
             {
                 int g = y;
 
-                while (g <= 10 && (board[x, g] == 1 || board[x, y + 1] == 2))
+                while (g < 10 && (map[x, g] == 1 || map[x, g] == 2))
                 {
                     ship.Points.Add((x, g));
                     g++;
                 }
             }
-            else if (x != 10 && (board[x + 1, y] == 1 || board[x, y + 1] == 2))
+            else if (x != 9 && (map[x + 1, y] == 1 || map[x, y + 1] == 2))
             {
                 int k = x;
 
-                while (k <= 10 && (board[k, y] == 1 || board[x, y + 1] == 2))
+                while (k < 10 && (map[k, y] == 1 || map[k, y] == 2))
                 {
                     ship.Points.Add((k, y));
                     k++;
@@ -133,14 +138,14 @@ namespace Battleship
 
             var countOfSameShips = ships.Where(p => p.Points.Count == newShipSize).Count();
 
-            if (newShipSize > 4 || newShipSize + countOfSameShips == 5)
-                return true;
-
             foreach (var point in newShip.Points)
             {
                 if (IsBadPoint(ships, point))
                     return false;
             }
+
+            if (newShipSize > 4 || newShipSize + countOfSameShips == 5)
+                return true;
 
             return false;
         }

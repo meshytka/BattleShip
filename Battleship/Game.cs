@@ -9,7 +9,7 @@ namespace Battleship
     public class Game
     {
         Board _board;
-        
+
         public Game()
         {
             _board = new Board();
@@ -36,7 +36,7 @@ namespace Battleship
             return newId;
         }
 
-        private ResultsOfTurn Turn(Guid id, (int, int) shot)
+        public ResultsOfTurn Turn(Guid id, (int, int) shot)
         {
             var game = LoadGame(id);
 
@@ -97,6 +97,49 @@ namespace Battleship
 
                 return ResultsOfTurn.miss;
             }
+        }
+
+        public int[,] GetPlayerMap(Guid id)
+        {
+            var board = LoadGame(id);
+
+            if (board == null)
+            {
+                throw new ArgumentException();
+            }
+
+            var map = id == board.idFirstPlayer ? board.mapFirstPlayer : board.mapSecondPlayer;
+            return map;
+        }
+
+        public int[,] GetEnemyMap(Guid id)
+        {
+            var board = LoadGame(id);
+
+            if (board == null)
+            {
+                throw new ArgumentException();
+            }
+
+            var map = id == board.idFirstPlayer ? board.mapFirstPlayer : board.mapSecondPlayer;
+            var anonimizeMap = AnonymizeMap(map);
+            return anonimizeMap;
+        }
+
+        private int[,] AnonymizeMap(int[,] map)
+        {
+            for (var i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    if (map[i,j] == 1)
+                    {
+                        map[i, j] = 0;
+                    }
+                }
+            }
+
+            return map;
         }
 
         private void SaveGame()

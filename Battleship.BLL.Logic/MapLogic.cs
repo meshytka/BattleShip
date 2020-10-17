@@ -1,22 +1,19 @@
-﻿using Battleship.Models;
+﻿using Battleship.BLL.Contracts;
+using Battleship.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
-namespace Battleship
+namespace Battleship.BLL.Logic
 {
-    public class MapCheck
+    public class MapLogic : IMapLogic
     {
-        public bool CanUserLoadNewMap(Guid id)
-        {
-            return true;
-        }
-
         public bool CheckMap(int[,] map)
         {
             List<Ship> ships = new List<Ship>();
 
-            if(!CheckMapSize(map))
+            if (!CheckMapSize(map))
             {
                 return false;
             }
@@ -75,12 +72,41 @@ namespace Battleship
             return ships;
         }
 
+        public int[,] GenerateMap()
+        {
+            var map = new int[10, 10];
+
+            var ships = GenerateShips();
+
+            map = AddShipsToMap(ships);
+
+            return map;
+        }
+
         private bool CheckMapSize(int[,] map)
         {
             if (map.Rank != 2 || map.Length != 100 || map.GetUpperBound(0) + 1 != 10)
             {
                 return false;
             }
+
+            return true;
+        }
+
+        private bool IsGoodShip(List<Ship> ships, Ship newShip)
+        {
+            var newShipSize = newShip.Points.Count();
+
+            var countOfSameShips = ships.Where(p => p.Points.Count == newShipSize).Count();
+
+            foreach (var point in newShip.Points)
+            {
+                if (!IsGoodPoint(ships, point))
+                    return false;
+            }
+
+            if (newShipSize + countOfSameShips >= 5)
+                return false;
 
             return true;
         }
@@ -147,22 +173,82 @@ namespace Battleship
             return ship;
         }
 
-        public bool IsGoodShip(List<Ship> ships, Ship newShip)
+        private List<Ship> GenerateShips()
         {
-            var newShipSize = newShip.Points.Count();
+            var ships = new List<Ship>();
 
-            var countOfSameShips = ships.Where(p => p.Points.Count == newShipSize).Count();
-
-            foreach (var point in newShip.Points)
+            for (var shipSize = 1; shipSize < 5; shipSize++)
             {
-                if (!IsGoodPoint(ships, point))
-                    return false;
+                int numOfShips = 0;
+
+                while (numOfShips + shipSize < 5)
+                {
+                    bool sucseesGenerate = false;
+
+                    while (!sucseesGenerate)
+                    {
+                        var newShip = GenerateShip(shipSize);
+
+                        if (IsGoodShip(ships, newShip))
+                        {
+                            ships.Add(newShip);
+                            sucseesGenerate = true;
+                        }
+                    }
+                }
             }
 
-            if (newShipSize + countOfSameShips >= 5)
-                return false;
+            return ships;
+        }
 
-            return true;
+        private Ship GenerateShip(int size)
+        {
+            Ship ship = new Ship();
+            Random random = new Random();
+
+            bool isHorizontal = random.Next(0, 99) < 50 ? true : false;
+
+            (int, int) firstPoint = GenerateFirstPoint(size, isHorizontal);
+
+            ship.Points.Add(firstPoint);
+
+            for (int i = 0; i < size; i++)
+            {
+                int x = firstPoint.Item1 + (isHorizontal ? 0 : i);
+                int y = firstPoint.Item2 + (isHorizontal ? i : 0);
+
+                ship.Points.Add((x, y));
+            }
+
+            return ship;
+        }
+
+        private (int, int) GenerateFirstPoint(int size, bool isHorizontal)
+        {
+            Random random = new Random();
+
+            int x = 0;
+            int y = 0;
+
+            x = random.Next(0, isHorizontal ? 10 : (10 - size));
+            y = random.Next(0, isHorizontal ? (10 - size) : 10);
+
+            return (x, y);
+        }
+
+        private int[,] AddShipsToMap(List<Ship> ships)
+        {
+            var map = new int[10, 10];
+
+            foreach (var ship in ships)
+            {
+                foreach (var point in ship.Points)
+                {
+                    map[point.Item1, point.Item2] = 1;
+                }
+            }
+
+            return map;
         }
     }
 }

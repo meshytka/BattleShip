@@ -1,25 +1,27 @@
-﻿using Battleship.Models;
+﻿using Battleship.BLL.Contracts;
+using Battleship.DAL.Contracts;
+using Battleship.Entities;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace Battleship
+namespace Battleship.BLL.Logic
 {
-    public class Game
+    public class GameLogic : IGameLogic
     {
+        IGameDao _gameDao;
         Board _board;
 
-        public Game()
+        public GameLogic(IGameDao gameDao)
         {
+            _gameDao = gameDao;
             _board = new Board();
         }
 
         public Guid NewGame()
         {
-            var gameWhithOnePlayer = GetGameWhithOnePlayer();
-
             Guid newId = Guid.NewGuid();
+
+            var gameWhithOnePlayer = GetGameWhithOnePlayer();
 
             if (gameWhithOnePlayer == null)
             {
@@ -126,13 +128,38 @@ namespace Battleship
             return anonimizeMap;
         }
 
+        public bool AddNewUserMap(Guid id, int[,] map)
+        {
+            MapLogic mapLogic = new MapLogic();
+
+            _board = LoadGame(id);
+
+            if (_board == null || _board.statusOfGame == StatusOfGame.Started || _board.statusOfGame == StatusOfGame.Finished || !mapLogic.CheckMap(map))
+            {
+                return false;
+            }
+
+            if (id == _board.idFirstPlayer)
+            {
+                _board.mapFirstPlayer = map;
+            }
+            else
+            {
+                _board.mapSecondPlayer = map;
+            }
+
+            SaveGame();
+
+            return true;
+        }
+
         private int[,] AnonymizeMap(int[,] map)
         {
             for (var i = 0; i < 10; i++)
             {
                 for (int j = 0; j < 10; j++)
                 {
-                    if (map[i,j] == 1)
+                    if (map[i, j] == 1)
                     {
                         map[i, j] = 0;
                     }
@@ -144,13 +171,13 @@ namespace Battleship
 
         private void SaveGame()
         {
-
+            _gameDao.SaveGame(_board);
         }
 
         private ResultsOfTurn KillOrHit(int[,] map, (int, int) shot)
         {
-            MapCheck boardCheck = new MapCheck();
-            var allShips = boardCheck.GetAllShips(map);
+            MapLogic mapLogic = new MapLogic();
+            var allShips = mapLogic.GetAllShips(map);
 
             var ship = allShips.Where(ship => ship.Points.Contains(shot)).FirstOrDefault();
 
@@ -162,15 +189,14 @@ namespace Battleship
             return ResultsOfTurn.kill;
         }
 
-
         private Board LoadGame(Guid id)
         {
-            return null;
+            return _gameDao.LoadGame(id);
         }
 
         private Board GetGameWhithOnePlayer()
         {
-            return null;
+            return _gameDao.GetGameWhithOnePlayer();
         }
     }
 }

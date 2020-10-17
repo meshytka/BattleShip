@@ -1,7 +1,7 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Visual Studio Projects\\battleship\\Battleship\\Battleship.csproj": {}
+    "D:\\Visual Studio Projects\\battleship\\Battleship\\Battleship.Api.csproj": {}
   },
   "projects": {
     "D:\\Visual Studio Projects\\battleship\\Battleship.BLL.Contracts\\Battleship.BLL.Contracts.csproj": {
@@ -112,12 +112,12 @@
         }
       }
     },
-    "D:\\Visual Studio Projects\\battleship\\Battleship\\Battleship.csproj": {
+    "D:\\Visual Studio Projects\\battleship\\Battleship\\Battleship.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Visual Studio Projects\\battleship\\Battleship\\Battleship.csproj",
-        "projectName": "Battleship",
-        "projectPath": "D:\\Visual Studio Projects\\battleship\\Battleship\\Battleship.csproj",
+        "projectUniqueName": "D:\\Visual Studio Projects\\battleship\\Battleship\\Battleship.Api.csproj",
+        "projectName": "Battleship.Api",
+        "projectPath": "D:\\Visual Studio Projects\\battleship\\Battleship\\Battleship.Api.csproj",
         "packagesPath": "C:\\Users\\me_sh\\.nuget\\packages\\",
         "outputPath": "D:\\Visual Studio Projects\\battleship\\Battleship\\obj\\",
         "projectStyle": "PackageReference",

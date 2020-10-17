@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Battleship.BLL.Contracts\Battleship.BLL.Contracts.csproj" />
+    <ProjectReference Include="..\Battleship.DAL.Contracts\Battleship.DAL.Contracts.csproj" />
+    <ProjectReference Include="..\Battleship.Entities\Battleship.Entities.csproj" />
+  </ItemGroup>
+
+</Project>

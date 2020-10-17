@@ -1,4 +1,6 @@
 using Battleship;
+using Battleship.BLL.Contracts;
+using Battleship.BLL.Logic;
 using Battleship.Models;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -6,14 +8,14 @@ using System.Linq;
 
 namespace BattleShipTests
 {
-    public class MapCheckTests
+    public class MapLogicTests
     {
-        MapCheck mapCheck;
+        IMapLogic mapLogic;
 
         [SetUp]
         public void Setup()
         {
-            mapCheck = new MapCheck();
+            mapLogic = new MapLogic();
         }
 
         [Test]
@@ -33,7 +35,7 @@ namespace BattleShipTests
                 { 1,0,0,0,0,0,0,0,1,0 }
             };
 
-            var checkResult = mapCheck.CheckMap(map);
+            var checkResult = mapLogic.CheckMap(map);
 
             Assert.IsTrue(checkResult);
         }
@@ -111,11 +113,11 @@ namespace BattleShipTests
                 { 1,0,0,0,0,0,0,1,0 }
             };
 
-            Assert.IsFalse(mapCheck.CheckMap(mapMoreThatNeedShip));
-            Assert.IsFalse(mapCheck.CheckMap(mapLessThatNeedShip));
-            Assert.IsFalse(mapCheck.CheckMap(mapWhithBadPoint));
-            Assert.IsFalse(mapCheck.CheckMap(mapMoreSizeThatNeed));
-            Assert.IsFalse(mapCheck.CheckMap(mapLessSizeThatNeed));
+            Assert.IsFalse(mapLogic.CheckMap(mapMoreThatNeedShip));
+            Assert.IsFalse(mapLogic.CheckMap(mapLessThatNeedShip));
+            Assert.IsFalse(mapLogic.CheckMap(mapWhithBadPoint));
+            Assert.IsFalse(mapLogic.CheckMap(mapMoreSizeThatNeed));
+            Assert.IsFalse(mapLogic.CheckMap(mapLessSizeThatNeed));
         }
 
         [Test]
@@ -209,7 +211,7 @@ namespace BattleShipTests
                 }
             };
 
-            var shipsFromMethod = mapCheck.GetAllShips(map);
+            var shipsFromMethod = mapLogic.GetAllShips(map);
 
             var result = true;
 
@@ -227,161 +229,6 @@ namespace BattleShipTests
             }
 
             Assert.IsTrue(result);
-        }
-
-        [Test]
-        public void IsGoodShipReturnTrueWhenWeSendGoodShip()
-        {
-            List<Ship> ships = new List<Ship>()
-            {
-                new Ship()
-                {
-                    Points = new List<(int, int)>()
-                    {
-                        (0, 0), (0,1)
-                    },
-                },
-                new Ship()
-                {
-                    Points = new List<(int, int)>()
-                    {
-                        (0, 3), (1,3), (2,3)
-                    },
-                },
-                new Ship()
-                {
-                    Points = new List<(int, int)>()
-                    {
-                        (2, 9), (3,9)
-                    },
-                },
-                new Ship()
-                {
-                    Points = new List<(int, int)>()
-                    {
-                        (4, 1), (5,1), (6,1)
-                    },
-                },
-                new Ship()
-                {
-                    Points = new List<(int, int)>()
-                    {
-                        (5, 7)
-                    },
-                },
-                new Ship()
-                {
-                    Points = new List<(int, int)>()
-                    {
-                        (8, 3)
-                    },
-                },
-                new Ship()
-                {
-                    Points = new List<(int, int)>()
-                    {
-                        (8, 5)
-                    },
-                },
-                new Ship()
-                {
-                    Points = new List<(int, int)>()
-                    {
-                        (8, 8), (9,8)
-                    },
-                },
-                new Ship()
-                {
-                    Points = new List<(int, int)>()
-                    {
-                        (9, 0)
-                    },
-                }
-            };
-
-            Ship newShip = new Ship()
-            {
-                Points = new List<(int, int)>()
-                    {
-                        (0, 6), (0,7), (0,8), (0,9)
-                    },
-            };
-
-            Assert.IsTrue(mapCheck.IsGoodShip(ships, newShip));
-        }
-
-        [Test]
-        public void IsGoodShipReturnFalseWhenWeSendBadShip()
-        {
-            List<Ship> ships = new List<Ship>()
-            {
-                new Ship()
-                {
-                    Points = new List<(int, int)>()
-                    {
-                        (0, 0), (0,1)
-                    },
-                },
-                new Ship()
-                {
-                    Points = new List<(int, int)>()
-                    {
-                        (0, 3), (1,3), (2,3)
-                    },
-                },
-                new Ship()
-                {
-                    Points = new List<(int, int)>()
-                    {
-                        (2, 9), (3,9)
-                    },
-                },
-                new Ship()
-                {
-                    Points = new List<(int, int)>()
-                    {
-                        (5, 7)
-                    },
-                },
-                new Ship()
-                {
-                    Points = new List<(int, int)>()
-                    {
-                        (8, 3)
-                    },
-                },
-                new Ship()
-                {
-                    Points = new List<(int, int)>()
-                    {
-                        (8, 5)
-                    },
-                },
-                new Ship()
-                {
-                    Points = new List<(int, int)>()
-                    {
-                        (8, 8), (9,8)
-                    },
-                },
-                new Ship()
-                {
-                    Points = new List<(int, int)>()
-                    {
-                        (9, 0)
-                    },
-                }
-            };
-
-            Ship newShip = new Ship()
-            {
-                Points = new List<(int, int)>()
-                    {
-                        (2, 4), (3,4), (5,4)
-                    },
-            };
-
-            Assert.IsFalse(mapCheck.IsGoodShip(ships, newShip));
         }
     }
 }

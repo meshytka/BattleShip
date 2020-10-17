@@ -13,7 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Battleship\Battleship.csproj" />
+    <ProjectReference Include="..\Battleship.BLL.Contracts\Battleship.BLL.Contracts.csproj" />
+    <ProjectReference Include="..\Battleship.BLL.Logic\Battleship.BLL.Logic.csproj" />
+    <ProjectReference Include="..\Battleship.Entities\Battleship.Entities.csproj" />
+    <ProjectReference Include="..\Battleship\Battleship.Api.csproj" />
   </ItemGroup>
 
 </Project>

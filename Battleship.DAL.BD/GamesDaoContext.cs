@@ -1,8 +1,5 @@
 ﻿using Battleship.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Battleship.DAL.BD
 {
@@ -17,7 +14,8 @@ namespace Battleship.DAL.BD
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Board>().HasKey(board => new {
+            builder.Entity<Board>().HasKey(board => new
+            {
                 board.idFirstPlayer,
             });
         }

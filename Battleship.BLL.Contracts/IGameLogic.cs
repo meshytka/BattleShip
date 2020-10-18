@@ -14,5 +14,7 @@ namespace Battleship.BLL.Contracts
         int[,] GetEnemyMap(Guid id);
 
         bool AddNewUserMap(Guid id, int[,] map);
+
+        int[,] GenerateNewMap();
     }
 }

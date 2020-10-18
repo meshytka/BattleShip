@@ -8,12 +8,14 @@ namespace Battleship.BLL.Logic
 {
     public class GameLogic : IGameLogic
     {
-        IGameDao _gameDao;
-        Board _board;
+        private IMapLogic _mapLogic;
+        private IGameDao _gameDao;
+        private Board _board;
 
-        public GameLogic(IGameDao gameDao)
+        public GameLogic(IMapLogic mapLogic, IGameDao gameDao)
         {
             _gameDao = gameDao;
+            _mapLogic = mapLogic;
             _board = new Board();
         }
 
@@ -33,6 +35,8 @@ namespace Battleship.BLL.Logic
                 _board.idSecondPlayer = newId;
             }
 
+            _board.statusOfGame = StatusOfGame.NotReady;
+
             SaveGame();
 
             return newId;
@@ -47,6 +51,11 @@ namespace Battleship.BLL.Logic
 
             if (game.frstPlayerTurn && id != _board.idFirstPlayer)
                 throw new ArgumentException();
+
+            if (game.statusOfGame == StatusOfGame.Ready)
+            {
+                game.statusOfGame = StatusOfGame.Started;
+            }
 
             int[,] map = new int[10, 10];
 
@@ -130,11 +139,9 @@ namespace Battleship.BLL.Logic
 
         public bool AddNewUserMap(Guid id, int[,] map)
         {
-            MapLogic mapLogic = new MapLogic();
-
             _board = LoadGame(id);
 
-            if (_board == null || _board.statusOfGame == StatusOfGame.Started || _board.statusOfGame == StatusOfGame.Finished || !mapLogic.CheckMap(map))
+            if (_board == null || _board.statusOfGame == StatusOfGame.Started || _board.statusOfGame == StatusOfGame.Finished || !_mapLogic.CheckMap(map))
             {
                 return false;
             }
@@ -148,9 +155,19 @@ namespace Battleship.BLL.Logic
                 _board.mapSecondPlayer = map;
             }
 
+            if (_board.mapFirstPlayer != null && _board.mapSecondPlayer != null)
+            {
+                _board.statusOfGame = StatusOfGame.Ready;
+            }
+
             SaveGame();
 
             return true;
+        }
+
+        public int[,] GenerateNewMap()
+        {
+            return _mapLogic.GenerateMap();
         }
 
         private int[,] AnonymizeMap(int[,] map)
@@ -176,8 +193,7 @@ namespace Battleship.BLL.Logic
 
         private ResultsOfTurn KillOrHit(int[,] map, (int, int) shot)
         {
-            MapLogic mapLogic = new MapLogic();
-            var allShips = mapLogic.GetAllShips(map);
+            var allShips = _mapLogic.GetAllShips(map);
 
             var ship = allShips.Where(ship => ship.Points.Contains(shot)).FirstOrDefault();
 

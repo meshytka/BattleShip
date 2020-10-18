@@ -1,7 +1,7 @@
-using Battleship;
 using Battleship.BLL.Contracts;
 using Battleship.BLL.Logic;
 using Battleship.Models;
+using BattleShipTests.Helpers;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ namespace BattleShipTests
 {
     public class MapLogicTests
     {
-        IMapLogic mapLogic;
+        private IMapLogic mapLogic;
 
         [SetUp]
         public void Setup()
@@ -21,19 +21,7 @@ namespace BattleShipTests
         [Test]
         public void CheckMapReturnTrueWhenWeCheckGoodMap()
         {
-            var map = new int[10, 10]
-            {
-                { 1,1,0,1,0,0,1,1,1,1 },
-                { 0,0,0,1,0,0,0,0,0,0 },
-                { 0,0,0,1,0,0,0,0,0,1 },
-                { 0,0,0,0,0,0,0,0,0,1 },
-                { 0,1,0,0,0,0,0,0,0,0 },
-                { 0,1,0,0,0,0,0,1,0,0 },
-                { 0,1,0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0,0,0 },
-                { 0,0,0,1,0,1,0,0,1,0 },
-                { 1,0,0,0,0,0,0,0,1,0 }
-            };
+            var map = MapHelper.goodMap();
 
             var checkResult = mapLogic.CheckMap(map);
 
@@ -43,75 +31,15 @@ namespace BattleShipTests
         [Test]
         public void CheckMapReturnFalseWhenWeCheckBadMap()
         {
-            var mapWhithBadPoint = new int[10, 10]
-            {
-                { 1,1,0,1,0,0,1,1,1,1 },
-                { 0,0,0,1,0,0,0,0,0,0 },
-                { 0,0,0,1,0,0,0,0,1,1 },
-                { 0,0,0,0,0,0,0,0,0,1 },
-                { 0,1,0,0,0,0,0,0,0,0 },
-                { 0,1,0,0,0,0,0,1,0,0 },
-                { 0,1,0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0,0,0 },
-                { 0,0,0,1,0,1,0,0,1,0 },
-                { 1,0,0,0,0,0,0,0,1,0 }
-            };
+            var mapWhithBadPoint = MapHelper.mapWhithBadPoint();
 
-            var mapLessThatNeedShip = new int[10, 10]
-            {
-                { 1,1,0,1,0,0,1,1,1,1 },
-                { 0,0,0,1,0,0,0,0,0,0 },
-                { 0,0,0,1,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0,0,0 },
-                { 0,1,0,0,0,0,0,0,0,0 },
-                { 0,1,0,0,0,0,0,1,0,0 },
-                { 0,1,0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0,0,0 },
-                { 0,0,0,1,0,1,0,0,1,0 },
-                { 1,0,0,0,0,0,0,0,1,0 }
-            };
+            var mapLessThatNeedShip = MapHelper.mapLessThatNeedShip();
 
-            var mapMoreThatNeedShip = new int[10, 10]
-            {
-                { 1,1,0,1,0,0,1,1,1,1 },
-                { 0,0,0,1,0,0,0,0,0,0 },
-                { 0,0,0,1,0,0,0,0,0,1 },
-                { 0,0,0,0,0,0,0,0,0,1 },
-                { 0,1,0,0,0,0,0,0,0,0 },
-                { 0,1,0,0,1,0,0,1,0,0 },
-                { 0,1,0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0,0,0 },
-                { 0,0,0,1,0,1,0,0,1,0 },
-                { 1,0,0,0,0,0,0,0,1,0 }
-            };
+            var mapMoreThatNeedShip = MapHelper.mapMoreThatNeedShip();
 
-            var mapMoreSizeThatNeed = new int[11, 11]
-            {
-                { 1,1,0,1,0,0,1,1,1,1,0 },
-                { 0,0,0,1,0,0,0,0,0,0,0 },
-                { 0,0,0,1,0,0,0,0,0,1,0 },
-                { 0,0,0,0,0,0,0,0,0,1,0 },
-                { 0,1,0,0,0,0,0,0,0,0,0 },
-                { 0,1,0,0,0,0,0,1,0,0,0 },
-                { 0,1,0,0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0,0,0,0 },
-                { 0,0,0,1,0,1,0,0,1,0,0 },
-                { 0,0,0,0,0,0,0,0,0,0,0 },
-                { 1,0,0,0,0,0,0,0,1,0,0 }
-            };
+            var mapMoreSizeThatNeed = MapHelper.mapMoreSizeThatNeed();
 
-            var mapLessSizeThatNeed = new int[9, 9]
-            {
-                { 1,1,0,1,0,1,1,1,1 },
-                { 0,0,0,1,0,0,0,0,0 },
-                { 0,0,0,1,0,0,0,0,1 },
-                { 0,1,0,0,0,0,0,0,1 },
-                { 0,1,0,0,0,0,0,0,0 },
-                { 0,1,0,0,0,0,1,0,0 },
-                { 0,0,0,0,0,0,0,0,0 },
-                { 0,0,0,1,0,1,0,1,0 },
-                { 1,0,0,0,0,0,0,1,0 }
-            };
+            var mapLessSizeThatNeed = MapHelper.mapLessSizeThatNeed();
 
             Assert.IsFalse(mapLogic.CheckMap(mapMoreThatNeedShip));
             Assert.IsFalse(mapLogic.CheckMap(mapLessThatNeedShip));
@@ -137,72 +65,72 @@ namespace BattleShipTests
                 { 1,0,0,0,0,0,0,0,1,0 }
             };
 
-            List<Ship> ships = new List<Ship>()
+            List<ShipModel> ships = new List<ShipModel>()
             {
-                new Ship()
+                new ShipModel()
                 {
                     Points = new List<(int, int)>()
                     {
                         (0, 0), (0,1)
                     },
                 },
-                new Ship()
+                new ShipModel()
                 {
                     Points = new List<(int, int)>()
                     {
                         (0, 3), (1,3), (2,3)
                     },
                 },
-                new Ship()
+                new ShipModel()
                 {
                     Points = new List<(int, int)>()
                     {
                         (0, 6), (0,7), (0,8), (0,9)
                     },
                 },
-                new Ship()
+                new ShipModel()
                 {
                     Points = new List<(int, int)>()
                     {
                         (2, 9), (3,9)
                     },
                 },
-                new Ship()
+                new ShipModel()
                 {
                     Points = new List<(int, int)>()
                     {
                         (4, 1), (5,1), (6,1)
                     },
                 },
-                new Ship()
+                new ShipModel()
                 {
                     Points = new List<(int, int)>()
                     {
                         (5, 7)
                     },
                 },
-                new Ship()
+                new ShipModel()
                 {
                     Points = new List<(int, int)>()
                     {
                         (8, 3)
                     },
                 },
-                new Ship()
+                new ShipModel()
                 {
                     Points = new List<(int, int)>()
                     {
                         (8, 5)
                     },
                 },
-                new Ship()
+                new ShipModel()
                 {
                     Points = new List<(int, int)>()
                     {
                         (8, 8), (9,8)
                     },
                 },
-                new Ship()
+                new ShipModel()
                 {
                     Points = new List<(int, int)>()
                     {

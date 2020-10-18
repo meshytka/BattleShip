@@ -1493,6 +1493,8 @@
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
           "Battleship.BLL.Contracts": "1.0.0",
+          "Battleship.BLL.Logic": "1.0.0",
+          "Battleship.DAL.BD": "1.0.0",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "3.1.4"
         },
         "compile": {

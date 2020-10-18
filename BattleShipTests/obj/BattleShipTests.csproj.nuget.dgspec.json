@@ -402,6 +402,12 @@
             "projectReferences": {
               "D:\\Visual Studio Projects\\battleship\\Battleship.BLL.Contracts\\Battleship.BLL.Contracts.csproj": {
                 "projectPath": "D:\\Visual Studio Projects\\battleship\\Battleship.BLL.Contracts\\Battleship.BLL.Contracts.csproj"
+              },
+              "D:\\Visual Studio Projects\\battleship\\Battleship.BLL.Logic\\Battleship.BLL.Logic.csproj": {
+                "projectPath": "D:\\Visual Studio Projects\\battleship\\Battleship.BLL.Logic\\Battleship.BLL.Logic.csproj"
+              },
+              "D:\\Visual Studio Projects\\battleship\\Battleship.DAL.BD\\Battleship.DAL.BD.csproj": {
+                "projectPath": "D:\\Visual Studio Projects\\battleship\\Battleship.DAL.BD\\Battleship.DAL.BD.csproj"
               }
             }
           }

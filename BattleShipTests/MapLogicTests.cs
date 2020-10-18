@@ -21,7 +21,7 @@ namespace BattleShipTests
         [Test]
         public void CheckMapReturnTrueWhenWeCheckGoodMap()
         {
-            var map = MapHelper.goodMap();
+            var map = MapTestsHelper.goodMap();
 
             var checkResult = mapLogic.CheckMap(map);
 
@@ -31,15 +31,15 @@ namespace BattleShipTests
         [Test]
         public void CheckMapReturnFalseWhenWeCheckBadMap()
         {
-            var mapWhithBadPoint = MapHelper.mapWhithBadPoint();
+            var mapWhithBadPoint = MapTestsHelper.mapWhithBadPoint();
 
-            var mapLessThatNeedShip = MapHelper.mapLessThatNeedShip();
+            var mapLessThatNeedShip = MapTestsHelper.mapLessThatNeedShip();
 
-            var mapMoreThatNeedShip = MapHelper.mapMoreThatNeedShip();
+            var mapMoreThatNeedShip = MapTestsHelper.mapMoreThatNeedShip();
 
-            var mapMoreSizeThatNeed = MapHelper.mapMoreSizeThatNeed();
+            var mapMoreSizeThatNeed = MapTestsHelper.mapMoreSizeThatNeed();
 
-            var mapLessSizeThatNeed = MapHelper.mapLessSizeThatNeed();
+            var mapLessSizeThatNeed = MapTestsHelper.mapLessSizeThatNeed();
 
             Assert.IsFalse(mapLogic.CheckMap(mapMoreThatNeedShip));
             Assert.IsFalse(mapLogic.CheckMap(mapLessThatNeedShip));
@@ -157,6 +157,26 @@ namespace BattleShipTests
             }
 
             Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void IsNewMapReturnTrueWhenSentNewMap()
+        {
+            var map = MapTestsHelper.goodMap();
+
+            var result = mapLogic.IsNewMap(map);
+
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void IsNewMapReturnFalseWhenSentNotNewMap()
+        {
+            var map = MapTestsHelper.notNewMap();
+
+            var result = mapLogic.IsNewMap(map);
+
+            Assert.IsFalse(result);
         }
     }
 }

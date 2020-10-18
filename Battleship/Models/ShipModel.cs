@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Battleship.Models
+namespace Battleship.Api.Models
 {
-    public class Ship
+    public class ShipModel
     {
         public List<(int, int)> Points { get; set; }
     }

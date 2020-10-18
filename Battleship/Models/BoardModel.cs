@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Linq;
 
 namespace Battleship.Models
 {
-    public enum ResultsOfTurn
+    public enum ResultsOfTurnModels
     {
         miss,
         hit,
@@ -11,7 +10,7 @@ namespace Battleship.Models
         win
     }
 
-    public enum StatusOfGame
+    public enum StatusOfGameModels
     {
         NotReady,
         Ready,
@@ -19,9 +18,9 @@ namespace Battleship.Models
         Finished
     }
 
-    public class Board
+    public class BoardModel
     {
-        public StatusOfGame statusOfGame { get; set; }
+        public StatusOfGameModels statusOfGame { get; set; }
         public bool frstPlayerTurn { get; set; }
         public Guid idFirstPlayer { get; set; }
         public Guid idSecondPlayer { get; set; }

@@ -7,11 +7,11 @@ namespace Battleship.DAL.BD
 {
     public class GamesDao : IGameDao
     {
-        GamesDaoContext _gamesDaoContext = new GamesDaoContext();
+        private GamesDaoContext _gamesDaoContext;
 
         public GamesDao()
         {
-
+            _gamesDaoContext = new GamesDaoContext();
         }
 
         public Board GetGameWhithOnePlayer()
@@ -30,7 +30,15 @@ namespace Battleship.DAL.BD
 
         public void SaveGame(Board board)
         {
-            _gamesDaoContext.Boards.Add(board);
+            if (_gamesDaoContext.Boards.Any(b => b.idFirstPlayer == board.idFirstPlayer))
+            {
+                _gamesDaoContext.Boards.Update(board);
+            }
+            else
+            {
+                _gamesDaoContext.Boards.Add(board);
+            }
+
             _gamesDaoContext.SaveChanges();
         }
     }

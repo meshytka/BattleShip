@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Battleship.BLL.Contracts\Battleship.BLL.Contracts.csproj" />
     <ProjectReference Include="..\Battleship.BLL.Logic\Battleship.BLL.Logic.csproj" />
+    <ProjectReference Include="..\Battleship.DAL.BD\Battleship.DAL.BD.csproj" />
     <ProjectReference Include="..\Battleship.Entities\Battleship.Entities.csproj" />
     <ProjectReference Include="..\Battleship\Battleship.Api.csproj" />
   </ItemGroup>

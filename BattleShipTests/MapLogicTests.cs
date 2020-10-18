@@ -1,6 +1,6 @@
 using Battleship.BLL.Contracts;
 using Battleship.BLL.Logic;
-using Battleship.Models;
+using Battleship.Entities;
 using BattleShipTests.Helpers;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -65,72 +65,72 @@ namespace BattleShipTests
                 { 1,0,0,0,0,0,0,0,1,0 }
             };
 
-            List<ShipModel> ships = new List<ShipModel>()
+            List<Ship> ships = new List<Ship>()
             {
-                new ShipModel()
+                new Ship()
                 {
                     Points = new List<(int, int)>()
                     {
                         (0, 0), (0,1)
                     },
                 },
-                new ShipModel()
+                new Ship()
                 {
                     Points = new List<(int, int)>()
                     {
                         (0, 3), (1,3), (2,3)
                     },
                 },
-                new ShipModel()
+                new Ship()
                 {
                     Points = new List<(int, int)>()
                     {
                         (0, 6), (0,7), (0,8), (0,9)
                     },
                 },
-                new ShipModel()
+                new Ship()
                 {
                     Points = new List<(int, int)>()
                     {
                         (2, 9), (3,9)
                     },
                 },
-                new ShipModel()
+                new Ship()
                 {
                     Points = new List<(int, int)>()
                     {
                         (4, 1), (5,1), (6,1)
                     },
                 },
-                new ShipModel()
+                new Ship()
                 {
                     Points = new List<(int, int)>()
                     {
                         (5, 7)
                     },
                 },
-                new ShipModel()
+                new Ship()
                 {
                     Points = new List<(int, int)>()
                     {
                         (8, 3)
                     },
                 },
-                new ShipModel()
+                new Ship()
                 {
                     Points = new List<(int, int)>()
                     {
                         (8, 5)
                     },
                 },
-                new ShipModel()
+                new Ship()
                 {
                     Points = new List<(int, int)>()
                     {
                         (8, 8), (9,8)
                     },
                 },
-                new ShipModel()
+                new Ship()
                 {
                     Points = new List<(int, int)>()
                     {

@@ -2,8 +2,9 @@
 
 namespace Battleship.Entities
 {
-    public enum ResultsOfTurn
+    public enum ResultsOfShoot
     {
+        canNotShoot,
         miss,
         hit,
         kill,

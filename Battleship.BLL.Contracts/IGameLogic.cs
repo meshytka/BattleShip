@@ -7,7 +7,7 @@ namespace Battleship.BLL.Contracts
     {
         Guid NewGame();
 
-        ResultsOfTurn Turn(Guid id, (int, int) shot);
+        ResultsOfShoot Shoot(Guid id, (int, int) shot);
 
         int[,] GetPlayerMap(Guid id);
 

@@ -42,15 +42,15 @@ namespace Battleship.BLL.Logic
             return newId;
         }
 
-        public ResultsOfTurn Turn(Guid id, (int, int) shot)
+        public ResultsOfShoot Shoot(Guid id, (int, int) shot)
         {
             var game = LoadGame(id);
 
             if (game == null)
-                throw new ArgumentNullException();
+                return ResultsOfShoot.canNotShoot;
 
             if (game.frstPlayerTurn && id != _board.idFirstPlayer)
-                throw new ArgumentException();
+                return ResultsOfShoot.canNotShoot;
 
             if (game.statusOfGame == StatusOfGame.Ready)
             {
@@ -94,19 +94,19 @@ namespace Battleship.BLL.Logic
                 {
                     _board.statusOfGame = StatusOfGame.Finished;
                     SaveGame();
-                    return ResultsOfTurn.win;
+                    return ResultsOfShoot.win;
                 }
             }
             else if (point == 2 || point == 4)
             {
-                return ResultsOfTurn.miss;
+                return ResultsOfShoot.miss;
             }
             else
             {
                 map[shot.Item1, shot.Item2] = 3;
                 SaveGame();
 
-                return ResultsOfTurn.miss;
+                return ResultsOfShoot.miss;
             }
         }
 
@@ -191,7 +191,7 @@ namespace Battleship.BLL.Logic
             _gameDao.SaveGame(_board);
         }
 
-        private ResultsOfTurn KillOrHit(int[,] map, (int, int) shot)
+        private ResultsOfShoot KillOrHit(int[,] map, (int, int) shot)
         {
             var allShips = _mapLogic.GetAllShips(map);
 
@@ -199,10 +199,10 @@ namespace Battleship.BLL.Logic
 
             if (ship.Points.Any(point => point != shot && map[point.Item1, point.Item2] == 1))
             {
-                return ResultsOfTurn.hit;
+                return ResultsOfShoot.hit;
             }
 
-            return ResultsOfTurn.kill;
+            return ResultsOfShoot.kill;
         }
 
         private Board LoadGame(Guid id)

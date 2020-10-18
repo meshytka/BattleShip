@@ -1,3 +1,7 @@
+using Battleship.BLL.Contracts;
+using Battleship.BLL.Logic;
+using Battleship.DAL.BD;
+using Battleship.DAL.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -18,6 +22,12 @@ namespace Battleship
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IGameLogic, GameLogic>();
+            services.AddScoped<IMapLogic, MapLogic>();
+            services.AddScoped<IMapSchemeLogic, MapSchemeLogic>();
+            services.AddScoped<IGameDao, GamesDao>();
+            services.AddScoped<IMapSchemeDao, MapSchemesDao>();
+
             services.AddControllers();
         }
 

@@ -10,5 +10,7 @@ namespace Battleship.DAL.Contracts
         Board LoadGame(Guid id);
 
         Board GetGameWhithOnePlayer();
+
+        StatusOfGame GetStatusOfGame(Guid id);
     }
 }

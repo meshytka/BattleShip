@@ -82,6 +82,19 @@ namespace Battleship.BLL.Logic
             return map;
         }
 
+        public bool IsNewMap(int[,] map)
+        {
+            foreach (var point in map)
+            {
+                if (point == 2 || point == 3)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         private bool CheckMapSize(int[,] map)
         {
             if (map.Rank != 2 || map.Length != 100 || map.GetUpperBound(0) + 1 != 10)

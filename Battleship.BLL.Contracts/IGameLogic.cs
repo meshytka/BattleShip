@@ -16,5 +16,7 @@ namespace Battleship.BLL.Contracts
         bool AddNewUserMap(Guid id, int[,] map);
 
         int[,] GenerateNewMap();
+
+        StatusOfGame GetStatusOfGame(Guid id);
     }
 }

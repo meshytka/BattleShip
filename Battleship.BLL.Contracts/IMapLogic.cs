@@ -10,5 +10,7 @@ namespace Battleship.BLL.Contracts
         List<Ship> GetAllShips(int[,] map);
 
         int[,] GenerateMap();
+
+        bool IsNewMap(int[,] map);
     }
 }

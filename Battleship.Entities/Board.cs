@@ -13,6 +13,7 @@ namespace Battleship.Entities
 
     public enum StatusOfGame
     {
+        NotCreated,
         NotReady,
         Ready,
         Started,

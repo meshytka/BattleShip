@@ -41,5 +41,12 @@ namespace Battleship.DAL.BD
 
             _gamesDaoContext.SaveChanges();
         }
+
+        public StatusOfGame GetStatusOfGame(Guid id)
+        {
+            var status = _gamesDaoContext.Boards.Where(b => b.idFirstPlayer == id || b.idSecondPlayer == id).FirstOrDefault().statusOfGame;
+
+            return status;
+        }
     }
 }

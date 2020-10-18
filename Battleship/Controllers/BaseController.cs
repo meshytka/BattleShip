@@ -1,9 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Battleship.Api.Controllers
 {
@@ -19,6 +15,15 @@ namespace Battleship.Api.Controllers
         }
 
         protected JsonResult MessageResult(string message, bool success = true)
+        {
+            return Json(new
+            {
+                Success = success,
+                Result = message
+            });
+        }
+
+        protected JsonResult MultipleResult(IEnumerable<string> message, bool success = true)
         {
             return Json(new
             {

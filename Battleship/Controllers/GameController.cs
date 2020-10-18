@@ -1,4 +1,5 @@
-﻿using Battleship.BLL.Contracts;
+﻿using Battleship.Api.Helpers;
+using Battleship.BLL.Contracts;
 using Battleship.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -58,6 +59,19 @@ namespace Battleship.Api.Controllers
             return MessageResult(map.ToString());
         }
 
+        [HttpGet("GetEnemyMap/{id}")]
+        public JsonResult GetStatusOfGame(Guid id)
+        {
+            var status = _gameLogic.GetStatusOfGame(id);
+
+            if (status == StatusOfGame.NotCreated)
+            {
+                return ErrorResponse("Game not created");
+            }
+
+            return MessageResult(GameControllerHelper.ConvertToStringStatusOfGame(status));
+        }
+
         [HttpPost("Turn")]
         public JsonResult Turn(Guid id, (int, int) shot)
         {
@@ -68,7 +82,7 @@ namespace Battleship.Api.Controllers
                 return ErrorResponse("You can't shoot");
             }
 
-            return MessageResult(result.ToString());
+            return MessageResult(GameControllerHelper.ConvertToStringResultsOfShoot(result));
         }
 
         [HttpPost("AddNewUserMap")]

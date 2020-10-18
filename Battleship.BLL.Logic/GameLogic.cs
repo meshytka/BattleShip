@@ -9,13 +9,15 @@ namespace Battleship.BLL.Logic
     public class GameLogic : IGameLogic
     {
         private IMapLogic _mapLogic;
+        private IMapSchemeLogic _mapSchemeLogic;
         private IGameDao _gameDao;
         private Board _board;
 
-        public GameLogic(IMapLogic mapLogic, IGameDao gameDao)
+        public GameLogic(IMapLogic mapLogic, IMapSchemeLogic mapSchemeLogic, IGameDao gameDao)
         {
             _gameDao = gameDao;
             _mapLogic = mapLogic;
+            _mapSchemeLogic = mapSchemeLogic;
             _board = new Board();
         }
 
@@ -141,7 +143,8 @@ namespace Battleship.BLL.Logic
         {
             _board = LoadGame(id);
 
-            if (_board == null || _board.statusOfGame == StatusOfGame.Started || _board.statusOfGame == StatusOfGame.Finished || !_mapLogic.CheckMap(map))
+            if (_board == null || _board.statusOfGame == StatusOfGame.Started || _board.statusOfGame == StatusOfGame.Finished ||
+                !_mapLogic.CheckMap(map) || !_mapLogic.IsNewMap(map))
             {
                 return false;
             }
@@ -160,6 +163,7 @@ namespace Battleship.BLL.Logic
                 _board.statusOfGame = StatusOfGame.Ready;
             }
 
+            _mapSchemeLogic.SaveMapSchemes(map);
             SaveGame();
 
             return true;
@@ -168,6 +172,11 @@ namespace Battleship.BLL.Logic
         public int[,] GenerateNewMap()
         {
             return _mapLogic.GenerateMap();
+        }
+
+        public StatusOfGame GetStatusOfGame(Guid id)
+        {
+            return _gameDao.GetStatusOfGame(id);
         }
 
         private int[,] AnonymizeMap(int[,] map)

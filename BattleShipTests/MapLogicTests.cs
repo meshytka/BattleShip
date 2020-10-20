@@ -1,8 +1,11 @@
 using Battleship.BLL.Contracts;
 using Battleship.BLL.Logic;
+using Battleship.DAL.Contracts;
 using Battleship.Entities;
 using BattleShipTests.Helpers;
+using Moq;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,7 +18,12 @@ namespace BattleShipTests
         [SetUp]
         public void Setup()
         {
-            mapLogic = new MapLogic();
+            Mock<IMapDao> mock = new Mock<IMapDao>();
+            mock.Setup(s => s.SaveMapSchemes(It.IsAny<Guid>(), It.IsAny<int[,]>())).Returns(MapSchemeResult.Success);
+            mock.Setup(s => s.GetMapSchemes()).Returns(new List<MapScheme>());
+            mock.Setup(s => s.GetMapSchemes(It.IsAny<Guid>())).Returns(new int[10,10]);
+
+            mapLogic = new MapLogic(mock.Object);
         }
 
         [Test]

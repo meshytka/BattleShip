@@ -1,4 +1,5 @@
 ﻿using Battleship.BLL.Contracts;
+using Battleship.DAL.Contracts;
 using Battleship.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,13 @@ namespace Battleship.BLL.Logic
 {
     public class MapLogic : IMapLogic
     {
+        private IMapDao _mapDao;
+
+        public MapLogic(IMapDao mapDao)
+        {
+            _mapDao = mapDao;
+        }
+
         public bool CheckMap(int[,] map)
         {
             List<Ship> ships = new List<Ship>();
@@ -93,6 +101,28 @@ namespace Battleship.BLL.Logic
             }
 
             return true;
+        }
+
+        public IEnumerable<MapScheme> GetMapSchemes()
+        {
+            return _mapDao.GetMapSchemes();
+        }
+
+        public int[,] GetMapSchemes(Guid id)
+        {
+            return _mapDao.GetMapSchemes(id);
+        }
+
+        public MapSchemeResult SaveMapSchemes(int[,] newMap)
+        {
+            if (!CheckMap(newMap) || !IsNewMap(newMap))
+            {
+                return MapSchemeResult.BadMapScheme;
+            }
+
+            var id = Guid.NewGuid();
+
+            return _mapDao.SaveMapSchemes(id, newMap);
         }
 
         private bool CheckMapSize(int[,] map)

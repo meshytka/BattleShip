@@ -5,11 +5,11 @@ namespace Battleship.DAL.Contracts
 {
     public interface IGameDao
     {
-        void SaveGame(Board board);
+        void SaveGame(Game board);
 
-        Board LoadGame(Guid id);
+        Game LoadGame(Guid id);
 
-        Board GetGameWhithOnePlayer();
+        Game GetGameWhithOnePlayer();
 
         StatusOfGame GetStatusOfGame(Guid id);
     }

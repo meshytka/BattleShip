@@ -24,9 +24,8 @@ namespace Battleship
         {
             services.AddScoped<IGameLogic, GameLogic>();
             services.AddScoped<IMapLogic, MapLogic>();
-            services.AddScoped<IMapSchemeLogic, MapSchemeLogic>();
             services.AddScoped<IGameDao, GamesDao>();
-            services.AddScoped<IMapSchemeDao, MapSchemesDao>();
+            services.AddScoped<IMapDao, MapDao>();
 
             services.AddControllers();
         }

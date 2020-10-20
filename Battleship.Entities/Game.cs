@@ -20,7 +20,7 @@ namespace Battleship.Entities
         Finished
     }
 
-    public class Board
+    public class Game
     {
         public StatusOfGame statusOfGame { get; set; }
         public bool frstPlayerTurn { get; set; }

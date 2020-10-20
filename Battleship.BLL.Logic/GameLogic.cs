@@ -9,16 +9,14 @@ namespace Battleship.BLL.Logic
     public class GameLogic : IGameLogic
     {
         private IMapLogic _mapLogic;
-        private IMapSchemeLogic _mapSchemeLogic;
         private IGameDao _gameDao;
-        private Board _board;
+        private Game _board;
 
-        public GameLogic(IMapLogic mapLogic, IMapSchemeLogic mapSchemeLogic, IGameDao gameDao)
+        public GameLogic(IMapLogic mapLogic, IGameDao gameDao)
         {
             _gameDao = gameDao;
             _mapLogic = mapLogic;
-            _mapSchemeLogic = mapSchemeLogic;
-            _board = new Board();
+            _board = new Game();
         }
 
         public Guid NewGame()
@@ -163,7 +161,7 @@ namespace Battleship.BLL.Logic
                 _board.statusOfGame = StatusOfGame.Ready;
             }
 
-            _mapSchemeLogic.SaveMapSchemes(map);
+            _mapLogic.SaveMapSchemes(map);
             SaveGame();
 
             return true;
@@ -214,12 +212,12 @@ namespace Battleship.BLL.Logic
             return ResultsOfShoot.kill;
         }
 
-        private Board LoadGame(Guid id)
+        private Game LoadGame(Guid id)
         {
             return _gameDao.LoadGame(id);
         }
 
-        private Board GetGameWhithOnePlayer()
+        private Game GetGameWhithOnePlayer()
         {
             return _gameDao.GetGameWhithOnePlayer();
         }

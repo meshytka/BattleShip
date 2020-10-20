@@ -6,25 +6,25 @@ using System.Linq;
 
 namespace Battleship.DAL.BD
 {
-    public class MapSchemesDao : IMapSchemeDao
+    public class MapDao : IMapDao
     {
-        private MapSchemesDaoContext _mapSchemesDaoContext;
+        private EntityDaoContext _entityDaoContext;
 
-        public MapSchemesDao()
+        public MapDao()
         {
-            _mapSchemesDaoContext = new MapSchemesDaoContext();
+            _entityDaoContext = new EntityDaoContext();
         }
 
         public IEnumerable<MapScheme> GetMapSchemes()
         {
-            var mapSchemes = _mapSchemesDaoContext.Maps;
+            var mapSchemes = _entityDaoContext.Maps;
 
             return mapSchemes.ToList();
         }
 
         public int[,] GetMapSchemes(Guid id)
         {
-            var mapScheme = _mapSchemesDaoContext.Maps.FirstOrDefault(map => map.Id == id);
+            var mapScheme = _entityDaoContext.Maps.FirstOrDefault(map => map.Id == id);
 
             if (mapScheme == null)
             {
@@ -36,7 +36,7 @@ namespace Battleship.DAL.BD
 
         public MapSchemeResult SaveMapSchemes(Guid id, int[,] newMap)
         {
-            if (_mapSchemesDaoContext.Maps.Any(m => m.map == newMap))
+            if (_entityDaoContext.Maps.Any(m => m.map == newMap))
             {
                 return MapSchemeResult.NotNewMapScheme;
             }
@@ -47,8 +47,8 @@ namespace Battleship.DAL.BD
                 map = newMap
             };
 
-            _mapSchemesDaoContext.Maps.Add(newMapScheme);
-            _mapSchemesDaoContext.SaveChanges();
+            _entityDaoContext.Maps.Add(newMapScheme);
+            _entityDaoContext.SaveChanges();
 
             return MapSchemeResult.Success;
         }

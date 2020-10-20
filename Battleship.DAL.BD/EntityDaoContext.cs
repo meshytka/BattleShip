@@ -3,17 +3,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Battleship.DAL.BD
 {
-    public class MapSchemesDaoContext : DbContext
+    public class EntityDaoContext : DbContext
     {
+        public virtual DbSet<Game> Boards { get; set; }
         public virtual DbSet<MapScheme> Maps { get; set; }
 
-        public MapSchemesDaoContext()
+        public EntityDaoContext()
         {
             Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Game>().HasKey(board => new
+            {
+                board.idFirstPlayer,
+            });
+
             builder.Entity<MapScheme>().HasKey(map => new
             {
                 map.Id,

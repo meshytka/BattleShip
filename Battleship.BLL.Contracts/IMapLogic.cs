@@ -1,4 +1,5 @@
 ﻿using Battleship.Entities;
+using System;
 using System.Collections.Generic;
 
 namespace Battleship.BLL.Contracts
@@ -12,5 +13,11 @@ namespace Battleship.BLL.Contracts
         int[,] GenerateMap();
 
         bool IsNewMap(int[,] map);
+
+        IEnumerable<MapScheme> GetMapSchemes();
+
+        int[,] GetMapSchemes(Guid id);
+
+        MapSchemeResult SaveMapSchemes(int[,] newMap);
     }
 }

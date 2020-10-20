@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Battleship.DAL.Contracts
 {
-    public interface IMapSchemeDao
+    public interface IMapDao
     {
         IEnumerable<MapScheme> GetMapSchemes();
 

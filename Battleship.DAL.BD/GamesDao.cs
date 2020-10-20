@@ -7,44 +7,44 @@ namespace Battleship.DAL.BD
 {
     public class GamesDao : IGameDao
     {
-        private GamesDaoContext _gamesDaoContext;
+        private EntityDaoContext _entityDaoContext;
 
         public GamesDao()
         {
-            _gamesDaoContext = new GamesDaoContext();
+            _entityDaoContext = new EntityDaoContext();
         }
 
-        public Board GetGameWhithOnePlayer()
+        public Game GetGameWhithOnePlayer()
         {
-            var game = _gamesDaoContext.Boards.FirstOrDefault(board => board.idSecondPlayer == Guid.Empty);
+            var game = _entityDaoContext.Boards.FirstOrDefault(board => board.idSecondPlayer == Guid.Empty);
 
             return game;
         }
 
-        public Board LoadGame(Guid id)
+        public Game LoadGame(Guid id)
         {
-            var game = _gamesDaoContext.Boards.FirstOrDefault(board => board.idFirstPlayer == id || board.idSecondPlayer == id);
+            var game = _entityDaoContext.Boards.FirstOrDefault(board => board.idFirstPlayer == id || board.idSecondPlayer == id);
 
             return game;
         }
 
-        public void SaveGame(Board board)
+        public void SaveGame(Game board)
         {
-            if (_gamesDaoContext.Boards.Any(b => b.idFirstPlayer == board.idFirstPlayer))
+            if (_entityDaoContext.Boards.Any(b => b.idFirstPlayer == board.idFirstPlayer))
             {
-                _gamesDaoContext.Boards.Update(board);
+                _entityDaoContext.Boards.Update(board);
             }
             else
             {
-                _gamesDaoContext.Boards.Add(board);
+                _entityDaoContext.Boards.Add(board);
             }
 
-            _gamesDaoContext.SaveChanges();
+            _entityDaoContext.SaveChanges();
         }
 
         public StatusOfGame GetStatusOfGame(Guid id)
         {
-            var status = _gamesDaoContext.Boards.Where(b => b.idFirstPlayer == id || b.idSecondPlayer == id).FirstOrDefault().statusOfGame;
+            var status = _entityDaoContext.Boards.Where(b => b.idFirstPlayer == id || b.idSecondPlayer == id).FirstOrDefault().statusOfGame;
 
             return status;
         }

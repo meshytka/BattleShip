@@ -8,7 +8,7 @@ namespace Battleship.DAL.BD
         public virtual DbSet<Game> Boards { get; set; }
         public virtual DbSet<MapScheme> Maps { get; set; }
 
-        public EntityDaoContext()
+        public EntityDaoContext(DbContextOptions options) : base(options)
         {
             Database.EnsureCreated();
         }
@@ -26,9 +26,9 @@ namespace Battleship.DAL.BD
             });
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql("Server=localhost;Port=5432;Database=Battleship;User Id=postgres;Password=Zhjckfd02;");
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseNpgsql("Server=localhost;Port=5432;Database=Battleship;User Id=postgres;Password=Zhjckfd02;");
+        //}
     }
 }

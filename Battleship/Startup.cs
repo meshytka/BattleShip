@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
 
 namespace Battleship
 {
@@ -26,6 +27,11 @@ namespace Battleship
             services.AddScoped<IMapLogic, MapLogic>();
             services.AddScoped<IGameDao, GamesDao>();
             services.AddScoped<IMapDao, MapDao>();
+
+            services.AddDbContext<EntityDaoContext>(options =>
+            {
+                options.UseNpgsql(Configuration.GetConnectionString("Default"));
+            });
 
             services.AddControllers();
         }

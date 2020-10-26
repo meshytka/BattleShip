@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Battleship.Entities
 {
@@ -12,6 +13,7 @@ namespace Battleship.Entities
     public class MapScheme
     {
         public Guid Id { get; set; }
+        [Required]
         public int[,] map { get; set; }
     }
 }
